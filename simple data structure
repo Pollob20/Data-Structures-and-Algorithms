@@ -1,0 +1,69 @@
+// Stack data structure
+class Stack {
+    constructor() {
+        this.items = [];
+    }
+
+    // Push an element onto the stack
+    push(value) {
+        this.items.push(value);
+    }
+
+    // Pop an element from the stack
+    pop() {
+        if (this.isEmpty()) {
+            console.log("Stack underflow");
+            return null;
+        }
+        return this.items.pop();
+    }
+
+    // Peek at the top of the stack
+    peek() {
+        if (this.isEmpty()) {
+            return null;
+        }
+        return this.items[this.items.length - 1];
+    }
+
+    // Check if the stack is empty
+    isEmpty() {
+        return this.items.length === 0;
+    }
+}
+
+// Function to check if the parentheses are balanced
+function isBalanced(expression) {
+    let stack = new Stack();
+
+    for (let i = 0; i < expression.length; i++) {
+        let current = expression[i];
+
+        if (current === '(' || current === '[') {
+            // Push opening brackets to the stack
+            stack.push(current);
+        } else if (current === ')' || current === ']') {
+            // Check for matching closing brackets
+            if (stack.isEmpty()) {
+                return false; // Unmatched closing bracket
+            }
+            let top = stack.peek();
+            if ((current === ')' && top === '(') || (current === ']' && top === '[')) {
+                stack.pop(); // Match found, pop the stack
+            } else {
+                return false; // Mismatched closing bracket
+            }
+        }
+    }
+
+    return stack.isEmpty(); // If the stack is empty, the parentheses are balanced
+}
+
+// Input expression
+let expression = prompt("Enter a string of parentheses: ");
+
+if (isBalanced(expression)) {
+    console.log("The parentheses are balanced.");
+} else {
+    console.log("The parentheses are NOT balanced.");
+}
