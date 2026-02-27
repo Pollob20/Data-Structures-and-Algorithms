@@ -1,0 +1,33 @@
+int x = 10;
+if(x > 0) {
+    printf("Positive\n");
+} else {
+    printf("Non-positive\n");
+}
+
+for(int i = 0; i < 5; i++) {
+    printf("%d ", i);
+}
+
+return_type function_name(parameters) {
+    // body
+}
+
+int add(int a, int b) {
+    return a + b;
+}
+
+struct Student {
+    int id;
+    char name[20];
+};
+
+#include <stdio.h>
+
+int main() {          // Function construct
+    int x = 10;       // Data construct
+    if(x > 0) {       // Control construct
+        printf("Positive\n");
+    }
+    return 0;         // Jump construct
+}
