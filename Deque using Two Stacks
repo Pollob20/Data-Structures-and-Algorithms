@@ -1,0 +1,26 @@
+#include <stdio.h>
+#define SIZE 100
+
+int s1[SIZE], s2[SIZE];
+int t1 = -1, t2 = -1;
+
+void pushFront(int x) { s1[++t1] = x; }
+void pushRear(int x) { s2[++t2] = x; }
+
+int popFront() {
+    if (t1 == -1) {
+        while (t2 != -1)
+            s1[++t1] = s2[t2--];
+    }
+    if (t1 == -1) return -1;
+    return s1[t1--];
+}
+
+int popRear() {
+    if (t2 == -1) {
+        while (t1 != -1)
+            s2[++t2] = s1[t1--];
+    }
+    if (t2 == -1) return -1;
+    return s2[t2--];
+}
