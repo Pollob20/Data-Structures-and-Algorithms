@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define CAPACITY 3
+
+struct Node {
+    int key;
+    struct Node *prev, *next;
+};
+
+struct Node* head = NULL;
+struct Node* tail = NULL;
+struct Node* hash[100] = {NULL};
+
+void moveToFront(struct Node* node) {
+    if (node == head) return;
+
+    if (node == tail)
+        tail = tail->prev;
+
+    if (node->prev)
+        node->prev->next = node->next;
+
+    if (node->next)
+        node->next->prev = node->prev;
+
+    node->prev = NULL;
+    node->next = head;
+
+    if (head)
+        head->prev = node;
+
+    head = node;
+}
+
+void insert(int key) {
+    if (hash[key] != NULL) {
+        moveToFront(hash[key]);
+        return;
+    }
+
+    struct Node* temp = malloc(sizeof(struct Node));
+    temp->key = key;
+    temp->prev = NULL;
+    temp->next = head;
+
+    if (head)
+        head->prev = temp;
+
+    head = temp;
+
+    if (tail == NULL)
+        tail = temp;
+
+    hash[key] = temp;
+
+    static int count = 0;
+    count++;
+
+    if (count > CAPACITY) {
+        hash[tail->key] = NULL;
+        struct Node* del = tail;
+        tail = tail->prev;
+        tail->next = NULL;
+        free(del);
+        count--;
+
+
+
+
+
+
+    }
+}
