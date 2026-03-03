@@ -1,0 +1,58 @@
+#include <stdio.h>
+#define SIZE 5
+
+int deque[SIZE];
+int front = -1, rear = -1;
+
+void insertFront(int value) {
+    if ((rear + 1) % SIZE == front) {
+        printf("Overflow\n");
+        return;
+    }
+
+    if (front == -1) {
+        front = rear = 0;
+    } else {
+        front = (front - 1 + SIZE) % SIZE;
+    }
+
+    deque[front] = value;
+}
+
+void insertRear(int value) {
+    if ((rear + 1) % SIZE == front) {
+        printf("Overflow\n");
+        return;
+    }
+
+    if (rear == -1) {
+        front = rear = 0;
+    } else {
+        rear = (rear + 1) % SIZE;
+    }
+
+    deque[rear] = value;
+}
+
+void display() {
+    if (front == -1) {
+        printf("Empty\n");
+        return;
+    }
+
+    int i = front;
+    while (1) {
+        printf("%d ", deque[i]);
+        if (i == rear)
+            break;
+        i = (i + 1) % SIZE;
+    }
+    printf("\n");
+}
+
+int main() {
+    insertRear(10);
+    insertRear(20);
+    insertFront(5);
+    display();
+}
