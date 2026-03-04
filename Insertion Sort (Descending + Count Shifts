@@ -1,0 +1,29 @@
+#include <stdio.h>
+
+void insertionSortDesc(int arr[], int n) {
+    int shifts = 0;
+
+    for(int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
+
+        while(j >= 0 && arr[j] < key) {
+            arr[j + 1] = arr[j];
+            shifts++;
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+
+    printf("Total Shifts: %d\n", shifts);
+}
+
+int main() {
+    int arr[] = {4, 2, 9, 1, 7};
+    insertionSortDesc(arr, 5);
+
+    for(int i = 0; i < 5; i++)
+        printf("%d ", arr[i]);
+
+    return 0;
+}
