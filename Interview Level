@@ -1,0 +1,25 @@
+int searchRotated(int arr[], int low, int high, int key) {
+
+    if(low > high)
+        return -1;
+
+    int mid = (low + high) / 2;
+
+    if(arr[mid] == key)
+        return mid;
+
+    // Left half sorted
+    if(arr[low] <= arr[mid]) {
+        if(key >= arr[low] && key < arr[mid])
+            return searchRotated(arr, low, mid - 1, key);
+        else
+            return searchRotated(arr, mid + 1, high, key);
+    }
+    // Right half sorted
+    else {
+        if(key > arr[mid] && key <= arr[high])
+            return searchRotated(arr, mid + 1, high, key);
+        else
+            return searchRotated(arr, low, mid - 1, key);
+    }
+}
