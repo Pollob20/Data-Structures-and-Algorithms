@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include <ctype.h>
+
+int values[100], vtop = -1;
+char ops[100];
+int otop = -1;
+
+void pushVal(int x){ values[++vtop] = x; }
+int popVal(){ return values[vtop--]; }
+
+void pushOp(char x){ ops[++otop] = x; }
+char popOp(){ return ops[otop--]; }
+
+int applyOp(int a,int b,char op)
+{
+    switch(op)
+    {
+        case '+': return a+b;
+        case '-': return a-b;
+        case '*': return a*b;
+        case '/': return a/b;
+    }
+    return 0;
+}
+
+int precedence(char op)
+{
+    if(op=='+'||op=='-') return 1;
+    if(op=='*'||op=='/') return 2;
+    return 0;
+}
+
+int main()
+{
+    char exp[]="2+3*4";
+    int i=0;
+
+    while(exp[i])
+    {
+        if(isdigit(exp[i]))
+            pushVal(exp[i]-'0');
+
+        else
+        {
+            while(otop!=-1 && precedence(ops[otop])>=precedence(exp[i]))
+            {
+                int b=popVal();
+                int a=popVal();
+                char op=popOp();
+                pushVal(applyOp(a,b,op));
+            }
+            pushOp(exp[i]);
+        }
+        i++;
+    }
+
+    while(otop!=-1)
+    {
+        int b=popVal();
+        int a=popVal();
+        char op=popOp();
+        pushVal(applyOp(a,b,op));
+    }
+
+    printf("Result = %d",popVal());
+
+    return 0;
+}
