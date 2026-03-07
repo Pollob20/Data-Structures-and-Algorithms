@@ -1,0 +1,37 @@
+struct Node* minValue(struct Node* node){
+    while(node->left!=NULL)
+        node=node->left;
+    return node;
+}
+
+struct Node* delete(struct Node* root,int key){
+
+    if(root==NULL) return root;
+
+    if(key < root->data)
+        root->left=delete(root->left,key);
+
+    else if(key > root->data)
+        root->right=delete(root->right,key);
+
+    else{
+
+        if(root->left==NULL){
+            struct Node* temp=root->right;
+            free(root);
+            return temp;
+        }
+
+        else if(root->right==NULL){
+            struct Node* temp=root->left;
+            free(root);
+            return temp;
+        }
+
+        struct Node* temp=minValue(root->right);
+        root->data=temp->data;
+        root->right=delete(root->right,temp->data);
+    }
+
+    return root;
+}
