@@ -1,0 +1,49 @@
+#include <stdio.h>
+
+int pq[100];
+int n=0;
+
+void push(int val){
+
+    pq[++n]=val;
+    int i=n;
+
+    while(i>1 && pq[i] > pq[i/2]){
+        int temp=pq[i];
+        pq[i]=pq[i/2];
+        pq[i/2]=temp;
+        i/=2;
+    }
+}
+
+int pop(){
+
+    int top=pq[1];
+    pq[1]=pq[n--];
+
+    int i=1;
+
+    while(1){
+
+        int largest=i;
+        int l=2*i;
+        int r=2*i+1;
+
+        if(l<=n && pq[l]>pq[largest])
+            largest=l;
+
+        if(r<=n && pq[r]>pq[largest])
+            largest=r;
+
+        if(largest!=i){
+            int temp=pq[i];
+            pq[i]=pq[largest];
+            pq[largest]=temp;
+            i=largest;
+        }
+        else
+            break;
+    }
+
+    return top;
+}
