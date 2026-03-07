@@ -1,0 +1,18 @@
+#include <stdio.h>
+
+int heap[100];
+int size=0;
+
+void insert(int val){
+
+    size++;
+    int i=size;
+    heap[i]=val;
+
+    while(i>1 && heap[i/2] < heap[i]){
+        int temp=heap[i];
+        heap[i]=heap[i/2];
+        heap[i/2]=temp;
+        i=i/2;
+    }
+}
