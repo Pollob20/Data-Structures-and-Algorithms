@@ -1,0 +1,38 @@
+#include <stdio.h>
+
+#define MAX 10
+
+void DFS(int graph[MAX][MAX], int visited[MAX], int node, int n)
+{
+    int i;
+
+    printf("%d ", node);
+    visited[node] = 1;
+
+    for(i = 0; i < n; i++)
+    {
+        if(graph[node][i] == 1 && visited[i] == 0)
+        {
+            DFS(graph, visited, i, n);
+        }
+    }
+}
+
+int main()
+{
+    int n = 5;
+    int visited[MAX] = {0};
+
+    int graph[MAX][MAX] = {
+        {0,1,1,0,0},
+        {1,0,1,1,0},
+        {1,1,0,0,1},
+        {0,1,0,0,1},
+        {0,0,1,1,0}
+    };
+
+    printf("DFS Traversal:\n");
+    DFS(graph, visited, 0, n);
+
+    return 0;
+}
