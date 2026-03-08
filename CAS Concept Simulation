@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <stdatomic.h>
+
+#define SIZE 10
+
+int queue[SIZE];
+atomic_int front = 0;
+atomic_int rear = 0;
+
+void enqueue(int x)
+{
+    int r;
+
+    do{
+        r = atomic_load(&rear);
+    }while(!atomic_compare_exchange_weak(&rear,&r,(r+1)%SIZE));
+
+    queue[r] = x;
+}
+
+int dequeue()
+{
+    int f;
+
+    do{
+        f = atomic_load(&front);
+    }while(!atomic_compare_exchange_weak(&front,&f,(f+1)%SIZE));
+
+    return queue[f];
+}
+
+int main()
+{
+    enqueue(10);
+    enqueue(20);
+
+    printf("%d\n",dequeue());
+}
