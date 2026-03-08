@@ -1,0 +1,60 @@
+#include <stdio.h>
+
+#define N 5
+
+int grid[N][N]={
+{0,0,1,0,0},
+{0,0,0,1,0},
+{1,0,0,0,0},
+{0,1,0,0,1},
+{0,0,0,0,0}
+};
+
+int visited[N][N];
+
+int dx[4]={1,-1,0,0};
+int dy[4]={0,0,1,-1};
+
+typedef struct{
+    int x,y,dist;
+}Node;
+
+Node queue[100];
+int front=0,rear=0;
+
+void BFS()
+{
+    queue[rear++] = (Node){0,0,0};
+    visited[0][0]=1;
+
+    while(front<rear)
+    {
+        Node cur = queue[front++];
+
+        if(cur.x==4 && cur.y==4)
+        {
+            printf("Shortest Distance = %d\n",cur.dist);
+            return;
+        }
+
+        for(int i=0;i<4;i++)
+        {
+            int nx = cur.x + dx[i];
+            int ny = cur.y + dy[i];
+
+            if(nx>=0 && ny>=0 && nx<N && ny<N)
+            {
+                if(!visited[nx][ny] && grid[nx][ny]==0)
+                {
+                    visited[nx][ny]=1;
+                    queue[rear++] = (Node){nx,ny,cur.dist+1};
+                }
+            }
+        }
+    }
+}
+
+int main()
+{
+    BFS();
+}
